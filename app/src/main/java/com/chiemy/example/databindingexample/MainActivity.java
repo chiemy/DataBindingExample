@@ -7,14 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.chiemy.example.databindingexample.bean.User;
-import com.chiemy.example.databindingexample.databinding.ActivityMainBinding;
+import com.chiemy.example.databindingexample.databinding.MainActivityBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        MainActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         // setContentView(R.layout.activity_main);
         // 官方文档说这种方式也可以,但是并没有用?
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.setUser(user);
         binding.setOnClicklistener(this);
-
+        binding.setStyle(new Style());
     }
 
     public void onClick(View view){

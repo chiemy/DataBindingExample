@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
 
-    <data>
+    <!-- 指定名称,不用根据布局名称生成的名称-->
+    <data
+         class="MainActivityBinding">
+        <!-- import 和java中的import用法类似,也是导入类, 当不支持用符号"*"导入包下所以的类-->
 
+        <import type="android.view.View"/>
+
+        <!-- 比如我自己有个View类, 跟系统的View重名了, 我们可以为其设置别名-->
+        <import type="com.chiemy.example.databindingexample.View"
+            alias="MyView"
+            />
+
+        <!-- 导入,在下文中直接使用-->
+        <import type="com.chiemy.example.databindingexample.bean.User"/>
+
+        <import type="com.chiemy.example.databindingexample.StringUtils"/>
+
+        <!-- 这里直接使用了User, 因为上文已经导入了全路径 -->
+        <!-- 现在看起来似乎没有必要单独import, 直接用全路径就好了, 但User可能不止一次的在variable里用到-->
         <variable
             name="user"
-            type="com.chiemy.example.databindingexample.bean.User" />
+            type="User" />
 
         <variable
             name="onClicklistener"
             type="com.chiemy.example.databindingexample.MainActivity"/>
+
+        <variable
+            name="style"
+            type="com.chiemy.example.databindingexample.Style"/>
+
     </data>
 
     <LinearLayout
@@ -21,16 +45,42 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
+        <!-- 上文improt View, 在android:visibility这里使用表达式时报了Cannot resolve symbol的错误, 但是编译和运行没有问题. Android Studio 1.5.1-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{user.firstName}"
+            android:visibility="@{user.isFriend ? View.VISIBLE : View.GONE}"
             />
 
+        <!-- textSize 使用表达式也报错了,但是编译运行没有问题-->
+        <!-- 注:如果ActivityMainBinding不调用相应方法setStyle方法, style就是空的, style.textSize并没有空指针一说,但是值只能是0-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{user.lastName}" />
+            android:text="@{user.lastName.toUpperCase()}"
+            android:textSize="@{style.textSize}"
+            />
+
+        <!-- 使用import的类型的静态方法-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StringUtils.capitalize(user.lastName)}"
+            />
+
+        <!-- 有个默认的名为context的variable, 类型为Context, 它是通过根布局的getContext()方法得到的-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StringUtils.packageName(context)}"
+            />
+
+        <!-- 传递到include的layout里, 其中也要包含一个类型为User, 名称为user的variable-->
+        <include
+            layout="@layout/include_layout"
+            bind:user="@{user}"
+            />
 
         <Button
             android:id="@+id/btn_list_item_binding"
