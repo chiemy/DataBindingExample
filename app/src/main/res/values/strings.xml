@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DataBindingExample</string>
+
+    <string name="name_format">Name is %s</string>
 </resources>
