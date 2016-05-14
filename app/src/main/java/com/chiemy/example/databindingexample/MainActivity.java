@@ -89,15 +89,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Class clz = null;
-            if (position == 0){
-                clz = ObservableObjectActivity.class;
-            }
-
-            if (clz != null){
-                Intent intent = new Intent(MainActivity.this, clz);
-                startActivity(intent);
-            }
         }
     }
 
