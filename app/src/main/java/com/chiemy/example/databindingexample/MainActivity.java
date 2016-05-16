@@ -18,7 +18,7 @@ import com.chiemy.example.databindingexample.bean.User;
 import com.chiemy.example.databindingexample.databinding.MainActivityBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private String[] titles = {"Observable", "Observable fileds", "observable collections"};
+    private String[] titles = {"Observable"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
