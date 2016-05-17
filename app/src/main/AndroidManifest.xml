@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListItemBindingActivity" />
-        <activity android:name=".ObservableActivity"></activity>
+        <activity android:name=".ObservableActivity" />
+        <activity android:name=".ViewStubActivity"></activity>
     </application>
 
 </manifest>

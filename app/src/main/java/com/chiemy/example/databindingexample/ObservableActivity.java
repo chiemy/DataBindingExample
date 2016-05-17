@@ -1,6 +1,7 @@
 package com.chiemy.example.databindingexample;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableArrayMap;
 import android.databinding.ObservableMap;
 import android.os.Bundle;
@@ -36,10 +37,9 @@ public class ObservableActivity extends AppCompatActivity implements View.OnClic
         userInfo.put("firstName", "chiemy");
         binding.setMapUser(userInfo);
 
-
-        findViewById(R.id.button).setOnClickListener(this);
-        findViewById(R.id.button1).setOnClickListener(this);
-        findViewById(R.id.button2).setOnClickListener(this);
+        binding.button.setOnClickListener(this);
+        binding.button1.setOnClickListener(this);
+        binding.button2.setOnClickListener(this);
 
     }
 

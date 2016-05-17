@@ -1,6 +1,7 @@
 package com.chiemy.example.databindingexample;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -9,7 +10,10 @@ import android.util.Log;
 public class StringUtils {
 
     public static String capitalize(String text){
-        return text.toUpperCase();
+        if (!TextUtils.isEmpty(text)){
+            return text.toUpperCase();
+        }
+        return text;
     }
 
     public static String packageName(Context context){

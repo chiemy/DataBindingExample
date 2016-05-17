@@ -2,6 +2,7 @@ package com.chiemy.example.databindingexample;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewStubProxy;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,26 +11,29 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.TextView;
 
 import com.chiemy.example.databindingexample.bean.User;
 import com.chiemy.example.databindingexample.databinding.MainActivityBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private String[] titles = {"Observable"};
+    private String[] titles = {"Observable", "ViewStub"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        //MainActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        // setContentView(R.layout.activity_main);
-        // 官方文档说这种方式也可以,但是并没有用?
-        // ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        // 方式二
+         MainActivityBinding binding = MainActivityBinding.inflate(getLayoutInflater());
+         View view = binding.getRoot();
+         setContentView(view);
 
-        // 这种方式是有效的
+        // 方式三
         // View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         // setContentView(root);
         // ActivityMainBinding binding = ActivityMainBinding.bind(root);
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         binding.setOnClicklistener(this);
         binding.setStyle(new Style());
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mainRecyclerView);
+        RecyclerView recyclerView = binding.mainRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new MainRecyclerViewDecoration());
         recyclerView.setAdapter(new MainAdapter());
@@ -90,10 +94,16 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             int position = getAdapterPosition();
             if (position == 0){
-                Intent intent = new Intent(MainActivity.this, ObservableActivity.class);
-                startActivity(intent);
+                startActivity(ObservableActivity.class);
+            } else if (position == 1){
+                startActivity(ViewStubActivity.class);
             }
         }
+    }
+
+    private void startActivity(Class clz){
+        Intent intent = new Intent(this, clz);
+        startActivity(intent);
     }
 
     private class MainRecyclerViewDecoration extends RecyclerView.ItemDecoration {
